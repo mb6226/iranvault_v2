@@ -20,11 +20,11 @@ class OpenPositionUseCase:
             quantity=trade_plan.position_size,
             entry_price=trade_plan.entry_price,
             current_price=trade_plan.entry_price,
+            stop_loss=trade_plan.stop_loss,
+            take_profit=trade_plan.take_profit,
             unrealized_pnl=0.0,
         )
 
-        portfolio.add_position(
-            position
-        )
+        portfolio.add_position(position)
 
         return position

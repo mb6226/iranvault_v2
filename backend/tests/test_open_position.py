@@ -31,8 +31,3 @@ position = OpenPositionUseCase().execute(
 )
 
 print(position)
-
-print(
-    "OPEN POSITIONS =",
-    len(portfolio.positions),
-)

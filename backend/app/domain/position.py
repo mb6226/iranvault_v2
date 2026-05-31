@@ -13,4 +13,8 @@ class Position:
 
     current_price: float
 
+    stop_loss: float
+
+    take_profit: float
+
     unrealized_pnl: float = 0.0
