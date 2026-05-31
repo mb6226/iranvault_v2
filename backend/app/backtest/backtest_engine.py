@@ -1,10 +1,15 @@
-from app.domain.candle import Candle
-from app.domain.signal import Signal
-from app.domain.trade_plan import TradePlan
-
 from app.application.create_trade_plan import (
     CreateTradePlanUseCase,
 )
+
+from app.broker.paper_broker import (
+    PaperBroker,
+)
+
+from app.domain.candle import Candle
+from app.domain.position import Position
+from app.domain.signal import Signal
+from app.domain.trade_plan import TradePlan
 
 
 class BacktestEngine:
@@ -13,13 +18,20 @@ class BacktestEngine:
         self,
         candles: list[Candle],
         strategy,
+        broker: PaperBroker,
         account_balance: float,
         risk_percent: float,
-    ) -> tuple[list[Signal], list[TradePlan]]:
+    ) -> tuple[
+        list[Signal],
+        list[TradePlan],
+        list[Position],
+    ]:
 
         signals: list[Signal] = []
 
         trade_plans: list[TradePlan] = []
+
+        positions: list[Position] = []
 
         signal = strategy.generate_signal(
             candles
@@ -38,6 +50,22 @@ class BacktestEngine:
                 )
             )
 
-            trade_plans.append(trade_plan)
+            trade_plans.append(
+                trade_plan
+            )
 
-        return signals, trade_plans
+            position = (
+                broker.open_position(
+                    trade_plan
+                )
+            )
+
+            positions.append(
+                position
+            )
+
+        return (
+            signals,
+            trade_plans,
+            positions,
+        )
