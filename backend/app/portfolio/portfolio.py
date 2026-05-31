@@ -115,3 +115,38 @@ class Portfolio:
             self.total_realized_pnl()
             / total
         )
+
+    def equity_curve(self) -> list[float]:
+
+        equity = self.initial_balance
+
+        curve: list[float] = []
+
+        for trade in self.trades:
+            equity += trade.pnl
+            curve.append(equity)
+
+        return curve
+
+    def max_drawdown(self) -> float:
+
+        curve = self.equity_curve()
+
+        if not curve:
+            return 0.0
+
+        peak = curve[0]
+
+        max_dd = 0.0
+
+        for value in curve:
+
+            if value > peak:
+                peak = value
+
+            drawdown = peak - value
+
+            if drawdown > max_dd:
+                max_dd = drawdown
+
+        return max_dd
