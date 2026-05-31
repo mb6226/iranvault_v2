@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 
 from app.domain.position import Position
+from app.domain.trade import Trade
 
 
 @dataclass(slots=True)
@@ -13,11 +14,21 @@ class Portfolio:
         default_factory=list
     )
 
+    trades: list[Trade] = field(
+        default_factory=list
+    )
+
     def add_position(
         self,
         position: Position,
     ) -> None:
         self.positions.append(position)
+
+    def add_trade(
+        self,
+        trade: Trade,
+    ) -> None:
+        self.trades.append(trade)
 
     def calculate_exposure(
         self,
