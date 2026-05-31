@@ -25,7 +25,7 @@ def generate_signal(
             side="BUY",
             entry_price=last_close,
             stop_loss=last_close * 0.99,
-            take_profit=last_close * 1.02,
+            take_profit=last_close * 1.03,
             confidence=0.7,
         )
 
