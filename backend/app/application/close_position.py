@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, UTC
 
 from app.domain.position import Position
 from app.domain.trade import Trade
@@ -23,7 +23,7 @@ class ClosePositionUseCase:
                 - exit_price
             ) * position.quantity
 
-        now = datetime.utcnow()
+        now = datetime.now(UTC)
 
         return Trade(
             symbol=position.symbol,

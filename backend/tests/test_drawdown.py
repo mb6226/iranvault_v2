@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, UTC
 
 from app.domain.trade import Trade
 from app.portfolio.portfolio import Portfolio
@@ -18,8 +18,8 @@ for pnl in [2000.0, -1000.0, 3000.0]:
             entry_price=100,
             exit_price=100,
             pnl=pnl,
-            opened_at=datetime.utcnow(),
-            closed_at=datetime.utcnow(),
+            opened_at=datetime.now(UTC),
+            closed_at=datetime.now(UTC),
         )
     )
 

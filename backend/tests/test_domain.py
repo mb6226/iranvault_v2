@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, UTC
 
 from app.domain.candle import Candle
 from app.domain.signal import Signal
@@ -11,7 +11,7 @@ def main():
     candle = Candle(
         symbol="BTCUSD",
         timeframe="M1",
-        timestamp=datetime.utcnow(),
+        timestamp=datetime.now(UTC),
         open=100,
         high=110,
         low=90,
@@ -44,8 +44,8 @@ def main():
         entry_price=100,
         exit_price=110,
         pnl=10,
-        opened_at=datetime.utcnow(),
-        closed_at=datetime.utcnow(),
+        opened_at=datetime.now(UTC),
+        closed_at=datetime.now(UTC),
     )
 
     print(candle)

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, UTC
 
 from app.domain.candle import Candle
 from app.market_structure.trend import detect_trend
@@ -14,7 +14,7 @@ def build_uptrend():
             Candle(
                 symbol="BTCUSD",
                 timeframe="M1",
-                timestamp=datetime.utcnow(),
+                timestamp=datetime.now(UTC),
                 open=price,
                 high=price + 1,
                 low=price - 1,

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, UTC
 
 from app.domain.trade import Trade
 
@@ -18,8 +18,8 @@ trade = Trade(
     entry_price=100000.0,
     exit_price=102000.0,
     pnl=2000.0,
-    opened_at=datetime.utcnow(),
-    closed_at=datetime.utcnow(),
+    opened_at=datetime.now(UTC),
+    closed_at=datetime.now(UTC),
 )
 
 portfolio.add_trade(trade)

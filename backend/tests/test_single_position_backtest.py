@@ -6,7 +6,7 @@ from app.portfolio.portfolio import Portfolio
 
 from app.domain.trade import Trade
 
-from datetime import datetime
+from datetime import datetime, UTC
 
 
 portfolio = Portfolio(
@@ -86,8 +86,8 @@ for i in range(20, len(candles) - 1):
                     entry_price=entry_price,
                     exit_price=exit_price,
                     pnl=pnl,
-                    opened_at=datetime.utcnow(),
-                    closed_at=datetime.utcnow(),
+                    opened_at=datetime.now(UTC),
+                    closed_at=datetime.now(UTC),
                 )
             )
 

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, UTC
 
 from app.domain.candle import Candle
 
@@ -16,7 +16,7 @@ for _ in range(25):
         Candle(
             symbol="BTCUSD",
             timeframe="M1",
-            timestamp=datetime.utcnow(),
+            timestamp=datetime.now(UTC),
             open=price,
             high=price + 2,
             low=price - 1,
@@ -31,7 +31,7 @@ candles.append(
     Candle(
         symbol="BTCUSD",
         timeframe="M1",
-        timestamp=datetime.utcnow(),
+        timestamp=datetime.now(UTC),
         open=price,
         high=price + 10,
         low=price - 1,

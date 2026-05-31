@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, UTC
 
 from app.domain.candle import Candle
 from app.strategies.trend_bos_strategy import generate_signal
@@ -13,7 +13,7 @@ for _ in range(30):
         Candle(
             symbol="BTCUSD",
             timeframe="M1",
-            timestamp=datetime.utcnow(),
+            timestamp=datetime.now(UTC),
             open=price,
             high=price + 1,
             low=price - 1,
@@ -29,7 +29,7 @@ candles.append(
     Candle(
         symbol="BTCUSD",
         timeframe="M1",
-        timestamp=datetime.utcnow(),
+        timestamp=datetime.now(UTC),
         open=200,
         high=250,
         low=199,

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, UTC
 
 from app.backtest.backtest_engine import (
     BacktestEngine,
@@ -30,7 +30,7 @@ candles = [
     Candle(
         symbol="BTCUSD",
         timeframe="M1",
-        timestamp=datetime.utcnow(),
+        timestamp=datetime.now(UTC),
         open=100,
         high=110,
         low=90,

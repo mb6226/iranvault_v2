@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, UTC
 
 from app.domain.candle import Candle
 from app.market_structure.choch import detect_choch
@@ -13,7 +13,7 @@ for _ in range(20):
         Candle(
             symbol="BTCUSD",
             timeframe="M1",
-            timestamp=datetime.utcnow(),
+            timestamp=datetime.now(UTC),
             open=price,
             high=price + 1,
             low=price - 1,
@@ -29,7 +29,7 @@ candles.append(
     Candle(
         symbol="BTCUSD",
         timeframe="M1",
-        timestamp=datetime.utcnow(),
+        timestamp=datetime.now(UTC),
         open=120,
         high=121,
         low=50,
