@@ -30,7 +30,7 @@ candles = []
 
 price = 100.0
 
-for _ in range(25):
+for _ in range(60):
 
     candles.append(
         Candle(

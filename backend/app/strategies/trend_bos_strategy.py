@@ -4,6 +4,9 @@ from app.domain.signal import Signal
 from app.market_structure.trend import detect_trend
 from app.market_structure.bos import detect_bos
 
+from app.indicators.ema import ema
+from app.indicators.rsi import rsi
+
 
 def generate_signal(
     candles: list[Candle],
@@ -13,11 +16,22 @@ def generate_signal(
 
     bos = detect_bos(candles)
 
+    ema20 = ema(candles, 20)
+
+    ema50 = ema(candles, 50)
+
+    rsi14 = rsi(candles, 14)
+
     last_close = candles[-1].close
 
     if (
         trend == "UPTREND"
         and bos == "BOS_UP"
+        and ema20 is not None
+        and ema50 is not None
+        and ema20 > ema50
+        and rsi14 is not None
+        and rsi14 > 55
     ):
         return Signal(
             symbol=candles[-1].symbol,
@@ -32,6 +46,11 @@ def generate_signal(
     if (
         trend == "DOWNTREND"
         and bos == "BOS_DOWN"
+        and ema20 is not None
+        and ema50 is not None
+        and ema20 < ema50
+        and rsi14 is not None
+        and rsi14 < 45
     ):
         return Signal(
             symbol=candles[-1].symbol,
