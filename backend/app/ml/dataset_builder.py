@@ -1,5 +1,9 @@
 from app.domain.candle import Candle
 
+from app.features.feature_builder import (
+    build_features,
+)
+
 from app.indicators.ema import ema
 from app.indicators.rsi import rsi
 
@@ -10,6 +14,7 @@ from app.market_structure.bos import detect_bos
 def build_dataset(
     candles: list[Candle],
     prediction_horizon: int = 24,
+    movement_threshold: float = 1000,
 ) -> list[dict]:
 
     rows = []
@@ -30,20 +35,30 @@ def build_dataset(
             ].close
         )
 
+        future_return = (
+            future_close
+            - current_close
+        )
+
+        if abs(future_return) < movement_threshold:
+            continue
+
+        features = build_features(window)
+
+        if features is None:
+            continue
+
         row = {
-            "close": current_close,
-            "ema20": ema(window, 20),
-            "ema50": ema(window, 50),
-            "rsi14": rsi(window, 14),
+            **features,
+
             "trend": detect_trend(window),
+
             "bos": detect_bos(window),
-            "future_return": (
-                future_close
-                - current_close
-            ),
+
+            "future_return": future_return,
+
             "target": int(
-                future_close
-                > current_close
+                future_return > 0
             ),
         }
 
