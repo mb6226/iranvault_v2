@@ -3,6 +3,10 @@ from app.domain.signal import Signal
 
 from app.market_structure.trend import detect_trend
 from app.market_structure.bos import detect_bos
+from app.market_structure.swing import (
+    swing_low,
+    swing_high,
+)
 
 from app.indicators.ema import ema
 from app.indicators.rsi import rsi
@@ -22,6 +26,10 @@ def generate_signal(
 
     rsi14 = rsi(candles, 14)
 
+    sl_low = swing_low(candles, 10)
+
+    sl_high = swing_high(candles, 10)
+
     last_close = candles[-1].close
 
     if (
@@ -38,8 +46,10 @@ def generate_signal(
             strategy="TREND_BOS",
             side="BUY",
             entry_price=last_close,
-            stop_loss=last_close * 0.99,
-            take_profit=last_close * 1.03,
+            stop_loss=sl_low,
+            take_profit=last_close + (
+                (last_close - sl_low) * 2
+            ),
             confidence=0.7,
         )
 
@@ -57,8 +67,10 @@ def generate_signal(
             strategy="TREND_BOS",
             side="SELL",
             entry_price=last_close,
-            stop_loss=last_close * 1.01,
-            take_profit=last_close * 0.98,
+            stop_loss=sl_high,
+            take_profit=last_close - (
+                (sl_high - last_close) * 2
+            ),
             confidence=0.7,
         )
 
